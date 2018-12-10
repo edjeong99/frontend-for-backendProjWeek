@@ -34,7 +34,7 @@ export const addNote = Note => dispatch => {
  
   dispatch({ type: "ADDING" });
   axios
-    .post("https://fe-notes.herokuapp.com/note/create", Note)
+    .post(`${server_URL}addnote`, Note)
     .then(response => {
       dispatch({ type: ADDING_SUCCESS, payload: {...Note, _id: response.data.success} });
     })
