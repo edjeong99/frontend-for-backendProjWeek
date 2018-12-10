@@ -59,7 +59,7 @@ class DisplayNotesView extends Component {
 
         <Route
           exact
-          path="/edit/:id"
+          path="/Notes/:id/edit"
           render={props => (
             <EditNote
               {...props}

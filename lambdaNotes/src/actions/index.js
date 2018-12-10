@@ -16,13 +16,15 @@ export const EDITING_REQUEST = "EDITING_REQUEST";
 export const EDITING_SUCCESS = "EDITING_SUCCESS";
 export const EDITING_FAILURE = "EDITING_FAILURE";
 
+const server_URL = "http://localhost:9000/api/"
 
 export const fetchNotes = () => dispatch => {
   // let's do some async stuff! Thanks react-thunk :)
   dispatch({ type: FETCHING_REQUEST });
  
-    axios.get('https://fe-notes.herokuapp.com/note/get/all')
+    axios.get(`${server_URL}notes`)
     .then(response => {
+      console.log('fetchNotes  response = ', response);
       dispatch({ type: FETCHING_SUCCESS, payload: response.data });
     })
     .catch(error => dispatch({ type: FETCHING_FAILURE, payload: error }));
