@@ -51,7 +51,7 @@ class DisplayNotesView extends Component {
             <DisplayNoteList
               {...props}
               notes={this.props.notes}
-              isSearched={this.props.isSearched}
+               isSearched={this.props.isSearched}
               handleSearchBoolean={this.handleSearchBoolean}
             />
           )}

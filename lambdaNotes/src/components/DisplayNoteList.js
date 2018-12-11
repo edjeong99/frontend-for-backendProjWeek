@@ -2,13 +2,14 @@ import DisplayNoteCard from "./DisplayNoteCard";
 import React, { Component } from "react";
 import SearchNote from "./SearchNote";
 import { searchFunc } from "../util";
+import { serverSearchFunc } from "../actions";
 
 // DisplayNoteList component is presentational component that manage display of list of note
 class DisplayNoteList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: "",
+    query :"",
       isSearched: false
     };
 
@@ -23,22 +24,33 @@ class DisplayNoteList extends Component {
     if (prevProps.isSearched !== this.props.isSearched) {
       this.setState({
         isSearched: this.props.isSearched,
-        query: ""
+  
       });
     }
   }
 
   handleInputChange = e => {
+
     this.setState({
       [e.target.name]: e.target.value,
       isSearched: true
     });
     this.props.handleSearchBoolean(true);
-  };
+  }
+
+
+
 
   render() {
-    if (this.state.isSearched)
-      this.displayedNotes = searchFunc(this.state.query, this.props.notes);
+   
+    if (this.state.isSearched){
+    // using server side search func
+    this.displayedNotes = serverSearchFunc(this.state.query);
+  console.log('in DisplayNoteList Func  displayNotes = ', this.displayedNotes);
+  }
+    
+    // using client side search func
+      // this.displayedNotes = searchFunc(this.state.query, this.props.notes);
     else this.displayedNotes = [...this.props.notes];
 
     return (
@@ -47,6 +59,7 @@ class DisplayNoteList extends Component {
           notes={this.state.notes}
           query={this.state.query}
           handleInputChange={this.handleInputChange}
+          onSubmit={this.handleOnSubmit}
         />
         <h3> Your Notes : </h3>
         <div className="noteList">

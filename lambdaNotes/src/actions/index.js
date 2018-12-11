@@ -84,3 +84,33 @@ export const setSearchBoolean = (bool) =>  {
  else return({type:"SEARCHFALSE"})
 };
  
+export  async function serverSearchFunc(query) {
+//  console.log('Server Search Func in actions/index  query = ', query);
+ 
+ 
+
+  const temp = await axios.get(`${server_URL}search?query=${query}`)
+
+  return temp.data;
+
+
+
+  // axios.get(`${server_URL}search?query=${query}`)
+    // .then(response => {
+    //   console.log('rsponse ', response);
+    //      return response.data;
+    // })
+    // .catch(err => console.log('Error in search func ', err));
+
+
+ 
+};
+ 
+ 
+  // return notes.filter(
+  //   note => note.title.includes(query) || note.textBody.includes(query)
+  // );
+
+
+
+// };

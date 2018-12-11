@@ -3,13 +3,13 @@ import React, { Component } from "react";
 
 // SearchNote is presentational component that display search box
 class SearchNote extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      query: ""
-    };
-    this.SearchedResultNotes = [];
-  }
+  // constructor(props) {
+    // super(props);
+    // this.state = {
+    //   query: ""
+    // };
+    // this.SearchedResultNotes = [];
+  // }
 
   render() {
     return (
@@ -17,6 +17,7 @@ class SearchNote extends Component {
         <input
           type="input"
           onChange={this.props.handleInputChange}
+          onSubmit={this.props.onSubmit}
           value={this.props.query}
           name="query"
           placeholder="Search notes..."
