@@ -29,6 +29,8 @@ class DisplayNotesView extends Component {
     this.props.addNote(note);
   };
 
+
+
   submitEdit = editedNote => {
     this.props.editNote(editedNote);
   };
@@ -53,6 +55,7 @@ class DisplayNotesView extends Component {
               notes={this.props.notes}
                isSearched={this.props.isSearched}
               handleSearchBoolean={this.handleSearchBoolean}
+              submitAdd={this.submitAdd}
             />
           )}
         />

@@ -31,12 +31,13 @@ export const fetchNotes = () => dispatch => {
 };
 
 export const addNote = Note => dispatch => {
- 
+  console.log('addNote in Actions ');
+
   dispatch({ type: "ADDING" });
   axios
     .post(`${server_URL}addnote`, Note)
     .then(response => {
-      // console.log('action dispatch adding  response.data = ', response.data);
+     console.log('action dispatch adding  response.data = ', response.data);
       dispatch({ type: ADDING_SUCCESS, payload: {...Note, id: response.data[0]} });
     })
     .catch(error => {
@@ -111,6 +112,20 @@ export  async function serverSearchFunc(query) {
   //   note => note.title.includes(query) || note.textBody.includes(query)
   // );
 
-
+  // export const cloneNote = Note => {
+  
+  
+    
+  //   axios
+  //     .post(`${server_URL}addnote`, Note)
+  //     .then(response => {
+  //      console.log('action dispatch adding  response.data = ', response.data);
+        
+  //     })
+  //     .catch(error => {
+       
+  //     });
+  
+  // };
 
 // };

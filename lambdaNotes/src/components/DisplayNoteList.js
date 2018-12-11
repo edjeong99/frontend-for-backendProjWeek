@@ -64,7 +64,8 @@ class DisplayNoteList extends Component {
         <h3> Your Notes : </h3>
         <div className="noteList">
           {this.displayedNotes.map(note => (
-            <DisplayNoteCard key={note.id} note={note} />
+            <DisplayNoteCard key={note.id} note={note} 
+            submitAdd={this.props.submitAdd}/>
           ))}
         </div>
       </div>
