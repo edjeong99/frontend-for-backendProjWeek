@@ -5,7 +5,7 @@ const DeleteNote = props => {
 
 // get the right note that matched ID in the URL
   if (props.match.params.id) {
-    note = props.notes.filter(item => item.id === props.match.params.id);
+    note = props.notes.filter(item => item.id == props.match.params.id);
     note = note[0];
   } else {
     alert("wrong note ID");
