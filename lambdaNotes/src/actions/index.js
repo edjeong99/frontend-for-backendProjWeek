@@ -36,7 +36,8 @@ export const addNote = Note => dispatch => {
   axios
     .post(`${server_URL}addnote`, Note)
     .then(response => {
-      dispatch({ type: ADDING_SUCCESS, payload: {...Note, id: response.data.success} });
+      // console.log('action dispatch adding  response.data = ', response.data);
+      dispatch({ type: ADDING_SUCCESS, payload: {...Note, id: response.data[0]} });
     })
     .catch(error => {
       dispatch({ type: ADDING_FAILURE, payload: error });
