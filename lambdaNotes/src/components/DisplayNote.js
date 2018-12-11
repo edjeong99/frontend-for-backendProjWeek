@@ -2,11 +2,12 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 const DisplayNote = props => {
-  let note = "";
-
+  let note
+  console.log("displayNote init  params.id = ", props.match.params.id);
   if (props.match.params.id) {
-    note = props.notes.filter(item => item._id === props.match.params.id);
-    note = note[0];
+   let noteArr = props.notes.filter(item => item.id == props.match.params.id);
+    console.log("displayNote  note = ", note);
+    note = noteArr[0];
     console.log("displayNote  note = ", note);
   } else {
     alert("wrong note ID");
@@ -16,7 +17,7 @@ const DisplayNote = props => {
   const displayItem = note ? (
     <div>
       <h3> {note.title} </h3>
-      <p> {note._id} </p>
+      <p> {note.id} </p>
       <p> {note.textBody} </p>
     </div>
   ) : (
@@ -26,7 +27,7 @@ const DisplayNote = props => {
   return (
     <div className="displayNote">
       <nav className="displayNoteNav">
-        <NavLink to={`/edit/${props.match.params.id}`}> Edit </NavLink>
+        <NavLink to={`/Notes/${props.match.params.id}/edit`}> Edit </NavLink>
         <NavLink to={`/Notes/${props.match.params.id}/delete`}>Delete</NavLink>
       </nav>
 

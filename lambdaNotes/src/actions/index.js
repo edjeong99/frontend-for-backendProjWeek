@@ -24,7 +24,7 @@ export const fetchNotes = () => dispatch => {
  
     axios.get(`${server_URL}notes`)
     .then(response => {
-      console.log('fetchNotes  response = ', response);
+      // console.log('fetchNotes  response = ', response);
       dispatch({ type: FETCHING_SUCCESS, payload: response.data });
     })
     .catch(error => dispatch({ type: FETCHING_FAILURE, payload: error }));
@@ -36,7 +36,7 @@ export const addNote = Note => dispatch => {
   axios
     .post(`${server_URL}addnote`, Note)
     .then(response => {
-      dispatch({ type: ADDING_SUCCESS, payload: {...Note, _id: response.data.success} });
+      dispatch({ type: ADDING_SUCCESS, payload: {...Note, id: response.data.success} });
     })
     .catch(error => {
       dispatch({ type: ADDING_FAILURE, payload: error });
@@ -48,7 +48,7 @@ export const deleteNote = id => dispatch => {
   // let's do some async stuff! Thanks react-thunk :)
   dispatch({ type: "DELETING" });
   axios
-    .delete(`https://fe-notes.herokuapp.com/note/delete/${id}`)
+    .delete(`${server_URL}notes/${id}`)
     .then(response => {
       dispatch({ type: DELETING_SUCCESS, payload: id });
     })
@@ -57,13 +57,20 @@ export const deleteNote = id => dispatch => {
     });
 };
 
-export const editNote = editedNote => dispatch => {
-  // let's do some async stuff! Thanks react-thunk :)
+export const editNote = Note => dispatch => {
+
+  const editedNote = {
+    "title": Note.title,
+    "textBody": Note.textBody,
+  }
+
   dispatch({ type: "EDITING_REQUEST" });
+
   axios
-    .put(`https://fe-notes.herokuapp.com/note/edit/${editedNote._id}`, editedNote)
+    .put(`${server_URL}notes/${Note.id}`, editedNote)
     .then(response => {
-      dispatch({ type: EDITING_SUCCESS, payload: response.data });
+      console.log('edit axios  response.data = ', response.data);
+      dispatch({ type: EDITING_SUCCESS, payload: Note });
     })
     .catch(error => {
       dispatch({ type: EDITING_FAILURE, payload: error });

@@ -8,8 +8,7 @@ class EditNote extends Component {
     this.state = {
       title: "",
       textBody: "",
-      tags: {},
-      _id: ""
+      id: ""
     };
     this.note = {};
 
@@ -20,7 +19,7 @@ class EditNote extends Component {
     if (this.props.match.params.id) {
       // get the note with corresponding id from URL
       this.note = this.props.notes.filter(
-        item => item._id === this.props.match.params.id
+        item => item.id == this.props.match.params.id
       );
       this.setState({ ...this.note[0] }); // set state variables to this.note.  ie title=this.note.title
     } else {
@@ -31,7 +30,7 @@ class EditNote extends Component {
 
   submitEdit = () => {
     this.props.submitEdit(this.state);
-    this.props.history.push(`/Notes/${this.state._id}`); // change the URL to display the edited note
+    this.props.history.push(`/Notes/${this.state.id}`); // change the URL to display the edited note
   };
 
   handleInputChange = e => {

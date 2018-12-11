@@ -5,7 +5,7 @@ const DeleteNote = props => {
 
 // get the right note that matched ID in the URL
   if (props.match.params.id) {
-    note = props.notes.filter(item => item._id === props.match.params.id);
+    note = props.notes.filter(item => item.id === props.match.params.id);
     note = note[0];
   } else {
     alert("wrong note ID");
@@ -13,12 +13,12 @@ const DeleteNote = props => {
   }
 
   const handleDelete = () => {
-    props.submitdelete(note._id);
+    props.submitdelete(note.id);
     props.history.push("/");
   };
 
   const handleCancel = () => {
-    props.history.push(`/Notes/${note._id}`);
+    props.history.push(`/Notes/${note.id}`);
   };
 
   return (

@@ -38,7 +38,7 @@ export const NoteReducer = (state = initialState, action) => {
 
     case DELETING_SUCCESS:
     // API doesn't return anything.  so using ID in payload, delete a note with that ID first.
-     let newNoteList = state.notes.filter( note => note._id !== action.payload);
+     let newNoteList = state.notes.filter( note => note.id !== action.payload);
       return { ...state, fetching: false, notes : [...newNoteList] };
 
     case DELETING_FAILURE:
@@ -60,9 +60,9 @@ export const NoteReducer = (state = initialState, action) => {
 
     case EDITING_SUCCESS:
     // API returns edited note.  so, delete old version of the note and add the edited note
-      let newNotes = state.notes.filter(note => note._id !== action.payload._id);
+      let existingNotes = state.notes.filter(note => note.id !== action.payload.id);
 
-      return { ...state, fetching: false, notes: [...newNotes, action.payload] };
+      return { ...state, fetching: false, notes: [...existingNotes, action.payload] };
 
     case EDITING_FAILURE:
       return { ...state, fetching: false, error: action.payload };
