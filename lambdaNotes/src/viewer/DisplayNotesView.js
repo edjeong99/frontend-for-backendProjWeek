@@ -9,7 +9,8 @@ import {
   DeleteNote,
   EditNote,
   Register,
-  Login
+  Login,
+  Logout
 } from "../components/";
 import {
   fetchNotes,
@@ -53,13 +54,14 @@ class DisplayNotesView extends Component {
           <NavLink to="/">Home </NavLink>
           <NavLink to="/login"> Login </NavLink>
           <NavLink to="/register"> Register </NavLink>
+          <NavLink to="/logout"> Logout </NavLink>
          
           {/* <NavLink to="/logout"> Logout </NavLink> */}
         </nav>
 
          <Route path="/register" component={Register} />
          <Route path="/login" component={Login} />
- 
+         <Route path="/logout" component={Logout} />
 
         <Route
           exact

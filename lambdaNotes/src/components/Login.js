@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 const serverURL = "http://localhost:9000/";
-const LOGIN_PATH = "auth/login"
+const LOGIN_PATH = "auth/login";
 
 const initialUser = {
   username: '',

@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-const url = "http://localhost:9000";
+
+const serverURL = "http://localhost:9000/";
+const REGISTER_PATH = "auth/register";
+
 
 const initialUser = {
   username: '',
@@ -26,7 +29,8 @@ export default class Register extends Component {
     event.preventDefault();
     console.log('in Register.js  this.state.user = ', this.state.user);
 
-    axios.post(`${url}/api/register`, this.state.user)
+
+    axios.post(`${serverURL}${REGISTER_PATH}`, this.state.user)
       .then((res) => {
         console.log('Register.js  res.toekn = ', res.data);
         if (res.status === 200) {
