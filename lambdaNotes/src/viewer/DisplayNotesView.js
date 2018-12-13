@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
-import { Route, withRouter } from "react-router-dom";
+import { Route, withRouter, NavLink } from "react-router-dom";
 import {
   DisplayNoteList,
   DisplayNote,
   AddNoteForm,
   DeleteNote,
-  EditNote
+  EditNote,
+  Register,
+  Login
 } from "../components/";
 import {
   fetchNotes,
@@ -46,6 +48,19 @@ class DisplayNotesView extends Component {
   render() {
     return (
       <div className="displayNotesView">
+
+             <nav>
+          <NavLink to="/">Home </NavLink>
+          <NavLink to="/login"> Login </NavLink>
+          <NavLink to="/register"> Register </NavLink>
+         
+          {/* <NavLink to="/logout"> Logout </NavLink> */}
+        </nav>
+
+         <Route path="/register" component={Register} />
+         <Route path="/login" component={Login} />
+ 
+
         <Route
           exact
           path="/"

@@ -18,6 +18,17 @@ export const EDITING_FAILURE = "EDITING_FAILURE";
 
 const server_URL = "http://localhost:9000/api/"
 
+const token = localStorage.getItem('secret_token');
+const options = {
+  headers: {
+    authorization: token,
+  },
+};
+
+// if (token) {
+//   axios.get(`${url}/api/jokes`, options)
+
+
 export const fetchNotes = () => dispatch => {
   // let's do some async stuff! Thanks react-thunk :)
   dispatch({ type: FETCHING_REQUEST });

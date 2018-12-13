@@ -44,3 +44,18 @@ export const downloadNotesToCSV = notes => {
   link.setAttribute("download", filename);
   link.click();
 };
+
+
+export const authenticate = () => {
+  const token = localStorage.getItem('secret_token');
+  const options = {
+    headers: {
+      authorization: token,
+    },
+  };
+
+  if (token) 
+      return true;
+   else 
+    return false
+}

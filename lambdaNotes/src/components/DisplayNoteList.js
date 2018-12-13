@@ -1,7 +1,7 @@
 import DisplayNoteCard from "./DisplayNoteCard";
 import React, { Component } from "react";
 import SearchNote from "./SearchNote";
-import { searchFunc } from "../util";
+import { searchFunc, authenticate } from "../util";
 import { serverSearchFunc } from "../actions";
 
 // DisplayNoteList component is presentational component that manage display of list of note
@@ -10,12 +10,22 @@ class DisplayNoteList extends Component {
     super(props);
     this.state = {
     query :"",
-      isSearched: false
+      isSearched: false,
+     
     };
-
     this.displayedNotes = [];
   }
 
+  componentDidMount() {
+
+if(authenticate()){
+    this.setState ({
+      displayedNotes : this.props.notes
+    })
+  }
+  else
+    this.props.history.push('/login');
+  }
   // to see if "View Your Notes" is clicked.  I use the props.isSearched boolean.
   // Toggle isSearched in redux state to decide whether all notes should be displayed, or
   // notes with search result should be displayed
@@ -26,6 +36,10 @@ class DisplayNoteList extends Component {
         isSearched: this.props.isSearched,
   
       });
+    }
+
+    if(!authenticate()){
+        this.props.history.push('/login');
     }
   }
 
@@ -41,16 +55,25 @@ class DisplayNoteList extends Component {
 
 
 
-  render() {
+   render() {
    
     if (this.state.isSearched){
     // using server side search func
-    this.displayedNotes = serverSearchFunc(this.state.query);
-  console.log('in DisplayNoteList Func  displayNotes = ', this.displayedNotes);
-  }
     
+    
+    serverSearchFunc(this.state.query).then(notes => {
+      console.log('in DisplayNoteList Func  then notes = ', notes);
+
+      this.displayedNotes = notes
+
+    })
+    
+    console.log('in DisplayNoteList Func  displayNotes = ', this.displayedNotes);
+  
     // using client side search func
       // this.displayedNotes = searchFunc(this.state.query, this.props.notes);
+  }
+    
     else this.displayedNotes = [...this.props.notes];
 
     return (
