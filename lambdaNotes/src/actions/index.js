@@ -36,7 +36,7 @@ export const fetchNotes = () => dispatch => {
  
     axios.get(`${server_URL}notes`, options)
     .then(response => {
-      // console.log('fetchNotes  response = ', response);
+       console.log('fetchNotes  response = ', response);
       dispatch({ type: FETCHING_SUCCESS, payload: response.data });
     })
     .catch(error => dispatch({ type: FETCHING_FAILURE, payload: error }));
@@ -47,10 +47,9 @@ export const addNote = Note => dispatch => {
 
   dispatch({ type: "ADDING" });
 
-  const reqConfig = {body : Note, options };
   
   axios
-    .post(`${server_URL}addnote`, reqConfig)
+    .post(`${server_URL}addnote`, Note, options)
     .then(response => {
      console.log('action dispatch adding  response.data = ', response.data);
       dispatch({ type: ADDING_SUCCESS, payload: {...Note, id: response.data[0]} });
@@ -83,10 +82,10 @@ export const editNote = Note => dispatch => {
 
   dispatch({ type: "EDITING_REQUEST" });
 
-  const reqConfig = {...options,body : editedNote };
+  
 
   axios
-    .put(`${server_URL}notes/${Note.id}`, reqConfig)
+    .put(`${server_URL}notes/${Note.id}`, editedNote, options)
     .then(response => {
       console.log('edit axios  response.data = ', response.data);
       dispatch({ type: EDITING_SUCCESS, payload: Note });

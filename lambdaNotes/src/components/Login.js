@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
+
+import {   fetchNotes } from "../actions";
 
 import gv from '../util/globalVariable'
+
 
 const serverURL = gv.SERVER_PATH || "http://localhost:9000/";
 // const LOGIN_PATH = "auth/login";
@@ -13,7 +17,7 @@ const initialUser = {
   password: '',
 };
 
-export default class Login extends Component {
+ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -48,6 +52,9 @@ export default class Login extends Component {
           user: { ...initialUser },
         });
       });
+
+
+      fetchNotes();
   }
 
   render() {
@@ -83,3 +90,8 @@ export default class Login extends Component {
     );
   }
 }
+
+
+
+export default Login
+
