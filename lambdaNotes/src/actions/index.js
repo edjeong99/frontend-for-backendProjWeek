@@ -34,6 +34,7 @@ export const fetchNotes = () => dispatch => {
   // let's do some async stuff! Thanks react-thunk :)
   dispatch({ type: FETCHING_REQUEST });
  
+  console.log("fetchNotes  options = ", options);
     axios.get(`${server_URL}notes`, options)
     .then(response => {
        console.log('fetchNotes  response = ', response);

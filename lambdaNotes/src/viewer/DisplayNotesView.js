@@ -26,16 +26,14 @@ import {
 
 class DisplayNotesView extends Component {
   componentDidMount() {
-    if(authenticate()){
-    this.props.fetchNotes();
+    if (authenticate()) {
+      this.props.fetchNotes();
     }
   }
 
   submitAdd = note => {
     this.props.addNote(note);
   };
-
-
 
   submitEdit = editedNote => {
     this.props.editNote(editedNote);
@@ -49,22 +47,28 @@ class DisplayNotesView extends Component {
     this.props.setSearchBoolean(bool);
   };
 
+  handleLogin = () =>{
+    this.props.fetchNotes();
+  }
+
   render() {
     return (
       <div className="displayNotesView">
-
-         <nav>
+        <nav>
           <NavLink to="/">Home </NavLink>
           <NavLink to="/login"> Login </NavLink>
           <NavLink to="/register"> Register </NavLink>
           <NavLink to="/logout"> Logout </NavLink>
-         
+
           {/* <NavLink to="/logout"> Logout </NavLink> */}
         </nav>
 
-         <Route path="/register" component={Register} />
-         <Route path="/login" component={Login} />
-         <Route path="/logout" component={Logout} />
+        <Route path="/register" component={Register} />
+        <Route
+          path="/login"
+          render={props => <Login {...props} handleLogin={this.handleLogin} />}
+        />
+        <Route path="/logout" component={Logout} />
 
         <Route
           exact
@@ -73,7 +77,7 @@ class DisplayNotesView extends Component {
             <DisplayNoteList
               {...props}
               notes={this.props.notes}
-               isSearched={this.props.isSearched}
+              isSearched={this.props.isSearched}
               handleSearchBoolean={this.handleSearchBoolean}
               submitAdd={this.submitAdd}
             />

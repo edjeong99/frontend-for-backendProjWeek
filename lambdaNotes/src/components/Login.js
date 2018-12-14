@@ -41,6 +41,9 @@ const initialUser = {
             console.log('login.js token = ', res.data); 
             
           localStorage.setItem('secret_token', res.data);
+          
+          this.props.handleLogin();
+
           this.props.history.push('/');
         } else {
           throw new Error();
@@ -49,12 +52,12 @@ const initialUser = {
       .catch((err) => {
         this.setState({
           message: 'Authentication failed.',
-          user: { ...initialUser },
+        
         });
       });
 
 
-      fetchNotes();
+      
   }
 
   render() {
