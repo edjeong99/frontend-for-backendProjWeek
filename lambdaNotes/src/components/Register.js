@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import gv from '../util/globalVariable'
+
+const serverURL = gv.SERVER_PATH || "http://localhost:9000/";
 
 
-const serverURL = "http://localhost:9000/";
-const REGISTER_PATH = "auth/register";
+
 
 
 const initialUser = {
@@ -30,7 +32,7 @@ export default class Register extends Component {
     console.log('in Register.js  this.state.user = ', this.state.user);
 
 
-    axios.post(`${serverURL}${REGISTER_PATH}`, this.state.user)
+    axios.post(`${serverURL}${gv.REGISTER_PATH}`, this.state.user)
       .then((res) => {
         console.log('Register.js  res.toekn = ', res.data);
         if (res.status === 200) {
@@ -56,7 +58,7 @@ export default class Register extends Component {
 
   render() {
     return (
-      <div>
+      <div className = "login">
         <form onSubmit={this.submitHandler}>
           <label htmlFor="username">Username</label>
           <input

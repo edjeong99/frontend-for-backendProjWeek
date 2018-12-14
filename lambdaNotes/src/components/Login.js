@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-const serverURL = "http://localhost:9000/";
-const LOGIN_PATH = "auth/login";
+import gv from '../util/globalVariable'
+
+const serverURL = gv.SERVER_PATH || "http://localhost:9000/";
+// const LOGIN_PATH = "auth/login";
+
+// const cv = require('../util/globalVariable')
 
 const initialUser = {
   username: '',
@@ -25,10 +29,12 @@ export default class Login extends Component {
 
   submitHandler = (event) => {
     event.preventDefault();
-    axios.post(`${serverURL}${LOGIN_PATH}`, this.state.user)
+
+// console.log('Login submitHandler process.env.SERVER_PATH =',    process.env.SERVER_PATH);
+    axios.post(`${serverURL}${gv.LOGIN_PATH}`, this.state.user)
       .then((res) => {
         if (res.status === 200 && res.data) {
-            console.log('login.js', res.data); 
+            console.log('login.js token = ', res.data); 
             
           localStorage.setItem('secret_token', res.data);
           this.props.history.push('/');
@@ -45,8 +51,13 @@ export default class Login extends Component {
   }
 
   render() {
+  
     return (
-      <div>
+      <div className = "login">
+           { this.state.message
+          ? (<h4>{this.state.message}</h4>)
+          : undefined
+        }
         <form onSubmit={this.submitHandler}>
           <label htmlFor="username">Username</label>
           <input
@@ -66,10 +77,7 @@ export default class Login extends Component {
           />
           <button type="submit">Submit</button>
         </form>
-        { this.state.message
-          ? (<h4>{this.state.message}</h4>)
-          : undefined
-        }
+   
       </div>
 
     );

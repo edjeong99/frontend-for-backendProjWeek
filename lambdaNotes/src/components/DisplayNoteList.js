@@ -58,9 +58,12 @@ if(authenticate()){
    render() {
    
     if (this.state.isSearched){
+
     // using server side search func
-    
-    
+    // below has bug.  displayedNotes won't get updated in time so older version of 
+    // displayedNotes will be used.
+    // either use state to trigger render when update is complete
+    // or put render inside of "then"    
     serverSearchFunc(this.state.query).then(notes => {
       console.log('in DisplayNoteList Func  then notes = ', notes);
 

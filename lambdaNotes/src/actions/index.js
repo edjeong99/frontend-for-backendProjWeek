@@ -1,6 +1,10 @@
 
 import axios from "axios";
 
+import gv from '../util/globalVariable'
+
+const server_URL = (gv.SERVER_PATH || "http://localhost:9000/")+"api/";
+
 export const FETCHING_REQUEST = "FETCHING_REQUEST";
 export const FETCHING_SUCCESS = "FETCHING_SUCCESS";
 export const FETCHING_FAILURE = "FETCHING_FAILURE";
@@ -16,24 +20,21 @@ export const EDITING_REQUEST = "EDITING_REQUEST";
 export const EDITING_SUCCESS = "EDITING_SUCCESS";
 export const EDITING_FAILURE = "EDITING_FAILURE";
 
-const server_URL = "http://localhost:9000/api/"
 
 const token = localStorage.getItem('secret_token');
 const options = {
-  headers: {
-    authorization: token,
-  },
-};
+      headers: {
+        authorization: token,
+      },
+    };
 
-// if (token) {
-//   axios.get(`${url}/api/jokes`, options)
 
 
 export const fetchNotes = () => dispatch => {
   // let's do some async stuff! Thanks react-thunk :)
   dispatch({ type: FETCHING_REQUEST });
  
-    axios.get(`${server_URL}notes`)
+    axios.get(`${server_URL}notes`, options)
     .then(response => {
       // console.log('fetchNotes  response = ', response);
       dispatch({ type: FETCHING_SUCCESS, payload: response.data });
@@ -45,8 +46,11 @@ export const addNote = Note => dispatch => {
   console.log('addNote in Actions ');
 
   dispatch({ type: "ADDING" });
+
+  const reqConfig = {body : Note, options };
+  
   axios
-    .post(`${server_URL}addnote`, Note)
+    .post(`${server_URL}addnote`, reqConfig)
     .then(response => {
      console.log('action dispatch adding  response.data = ', response.data);
       dispatch({ type: ADDING_SUCCESS, payload: {...Note, id: response.data[0]} });
@@ -61,7 +65,7 @@ export const deleteNote = id => dispatch => {
   // let's do some async stuff! Thanks react-thunk :)
   dispatch({ type: "DELETING" });
   axios
-    .delete(`${server_URL}notes/${id}`)
+    .delete(`${server_URL}notes/${id}`, options)
     .then(response => {
       dispatch({ type: DELETING_SUCCESS, payload: id });
     })
@@ -79,8 +83,10 @@ export const editNote = Note => dispatch => {
 
   dispatch({ type: "EDITING_REQUEST" });
 
+  const reqConfig = {...options,body : editedNote };
+
   axios
-    .put(`${server_URL}notes/${Note.id}`, editedNote)
+    .put(`${server_URL}notes/${Note.id}`, reqConfig)
     .then(response => {
       console.log('edit axios  response.data = ', response.data);
       dispatch({ type: EDITING_SUCCESS, payload: Note });
@@ -99,44 +105,9 @@ export const setSearchBoolean = (bool) =>  {
 export  async function serverSearchFunc(query) {
 //  console.log('Server Search Func in actions/index  query = ', query);
  
- 
-
-  const temp = await axios.get(`${server_URL}search?query=${query}`)
+   const temp = await axios.get(`${server_URL}search?query=${query}`, options)
 
   return temp.data;
 
 
-
-  // axios.get(`${server_URL}search?query=${query}`)
-    // .then(response => {
-    //   console.log('rsponse ', response);
-    //      return response.data;
-    // })
-    // .catch(err => console.log('Error in search func ', err));
-
-
- 
-};
- 
- 
-  // return notes.filter(
-  //   note => note.title.includes(query) || note.textBody.includes(query)
-  // );
-
-  // export const cloneNote = Note => {
-  
-  
-    
-  //   axios
-  //     .post(`${server_URL}addnote`, Note)
-  //     .then(response => {
-  //      console.log('action dispatch adding  response.data = ', response.data);
-        
-  //     })
-  //     .catch(error => {
-       
-  //     });
-  
-  // };
-
-// };
+}

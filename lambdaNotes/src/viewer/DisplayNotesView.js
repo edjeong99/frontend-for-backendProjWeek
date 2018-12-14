@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import { connect } from "react-redux";
 import { Route, withRouter, NavLink } from "react-router-dom";
+import { authenticate } from "../util";
 import {
   DisplayNoteList,
   DisplayNote,
@@ -25,7 +26,9 @@ import {
 
 class DisplayNotesView extends Component {
   componentDidMount() {
+    if(authenticate()){
     this.props.fetchNotes();
+    }
   }
 
   submitAdd = note => {
@@ -50,7 +53,7 @@ class DisplayNotesView extends Component {
     return (
       <div className="displayNotesView">
 
-             <nav>
+         <nav>
           <NavLink to="/">Home </NavLink>
           <NavLink to="/login"> Login </NavLink>
           <NavLink to="/register"> Register </NavLink>
